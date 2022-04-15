@@ -1,0 +1,302 @@
+
+
+Practical 1
+========================================================================================
+install.packages("couchDB")
+install.packages('sofa')
+devtools::install_github("ropensci/sofa")
+library('sofa')
+install.packages("devtools", dependencies = TRUE)
+
+
+
+#create connection object 
+> x<-Cushion$new()
+> x$ping()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=========================================================================
+Pratical 2
+=========================================================================
+ use tycs
+switched to db tycs
+> show database
+uncaught exception: Error: don't know how to show [database] :
+shellHelper.show@src/mongo/shell/utils.js:1211:11
+shellHelper@src/mongo/shell/utils.js:838:15
+@(shellhelp2):1:1
+> show databases
+admin       0.000GB
+config      0.000GB
+firstdb     0.000GB
+local       0.000GB
+updatedata  0.000GB
+> show dbs
+admin       0.000GB
+config      0.000GB
+firstdb     0.000GB
+local       0.000GB
+updatedata  0.000GB
+> db.dropDatabase()
+{ "ok" : 1 }
+> use tycs
+switched to db tycs
+> db.fycs.insert({name:"Gulshan", age:45, address: "Thane"})
+WriteResult({ "nInserted" : 1 })
+> db.fycs.find()
+{ "_id" : ObjectId("6259a9f71073819983dde3cd"), "name" : "Gulshan", "age" : 45, "address" : "Thane" }
+> db.fycs.find().pretty()
+{
+        "_id" : ObjectId("6259a9f71073819983dde3cd"),
+        "name" : "Gulshan",
+        "age" : 45,
+        "address" : "Thane"
+}
+> show collactions
+uncaught exception: Error: don't know how to show [collactions] :
+shellHelper.show@src/mongo/shell/utils.js:1211:11
+shellHelper@src/mongo/shell/utils.js:838:15
+@(shellhelp2):1:1
+> show collections
+fycs
+> db.fycs.drop()
+true
+> show collections
+> db.fycs.insert({name:"Gulshan", age:45, address: "Thane"})
+WriteResult({ "nInserted" : 1 })
+> show collections
+fycs
+> db.fycs.find().pretty()
+{
+        "_id" : ObjectId("6259ab091073819983dde3ce"),
+        "name" : "Gulshan",
+        "age" : 45,
+        "address" : "Thane"
+}
+> db.tycs.insert(
+... ... {
+... ... name: "ASIF",
+... ... age: 20,
+... ... email: "asif@gmail.com",
+... ... course: [ { name: "MongoDB", duration: 7 }, { name: "Java", duration: 30 } ]
+... ... }
+... ... )
+WriteResult({ "nInserted" : 1 })
+> db.fycs.find().pretty()
+{
+        "_id" : ObjectId("6259ab091073819983dde3ce"),
+        "name" : "Gulshan",
+        "age" : 45,
+        "address" : "Thane"
+}
+> db.sycs.insert({name:"Gulshan Chauhan", email:"gulashan179@gmail.com", age:22, Course: [{Name: "infosys", duration: 100}, {Name: "sycs" , duration: 89}])
+
+
+> db.tycs.insert( { name: "ASIF", age: 20, email: "asif@gmail.com", course: [ { name: "MongoDB", duration: 7 }, { name: "Java", duration: 30 } ] })
+WriteResult({ "nInserted" : 1 })
+> db.tycs.find().pretty()
+			======UPDATE=====
+db.got.update({"name":"Jon Snow"},
+{$set:{"name":"Kit Harington"}},{multi:true})
+			======FIND=====
+db.students.find({}, {"_id": 0, "StudentId" : 1})
+===========================SHORT=============================
+ db.studentdata.find({}, {"student_id": 1, _id:0}).sort({"student_id": -1})
+========================GETINDEX==================================
+db.collection_name.getIndexes()
+============================LIMIT=============================
+b.collection_name.find().limit(number_of_documents)
+db.studentdata.find({student_id : {$gt:2002}}).pretty()
+db.studentdata.find({student_id : {$gt:2002}}).limit(1).pretty()
+SKIP===============
+db.studentdata.find({student_id : {$gt:2002}}).limit(1).skip(1).pretty()
+> db.tycs.find()
+
+{ "_id" : ObjectId("6259ab991073819983dde3cf"), "name" : "ASIF", "age" : 20, "email" : "asif@gmail.com", "course" : [ { "name" : "MongoDB", "duration" : 7 }, { "name" : "Java", "duration" : 30 } ] }
+{ "_id" : ObjectId("6259ad0f1073819983dde3d0"), "name" : "ASIF", "age" : 20, "email" : "asif@gmail.com", "course" : [ { "name" : "MongoDB", "duration" : 7 }, { "name" : "Java", "duration" : 30 } ] }
+>
+
+
+db.tycs.insert( { name: "ASIF", age: 20, email: "asif@gmail.com", course: [ { name: "MongoDB", duration: 7 }, { name: "Java", duration: 30 } ] })
+
+
+
+==============================================================================================
+Practical 3.a
+=================================================================================================
+
+1]
+data_iris<-iris[1:4]
+Cov_data<-cov(data_iris)
+Eigen_data<-eigen(Cov_data)
+PCA_data<-princomp(data_iris,cor="False")
+Eigen_data$values
+2]
+PCA_data$sdev^2
+PCA_data$loadings[,1:4]
+Eigen_data$vectors
+summary(PCA_data)
+biplot(PCA_data)
+screeplot(PCA_data,type="lines")
+Practical No. 3 
+Aim: Practical of Principal Component Analysis
+Class: TYCS Name: Gulshan Suryanarayan Chauhan No.: 2153004
+model2=PCA_data$loadings[,1]
+model2_scores<-as.matrix(data_iris)%*%model2
+library(class)
+install.packages("e1071")
+library(e1071)
+mod1<-naiveBayes(iris[,1:4],iris[,5])
+mod2<-naiveBayes(model2_scores,iris[,5])
+table(predict(mod1,iris[,1:4]),iris[,5])
+table(predict(mod2,model2_scores),iris[,5])
+
+===================================================================================================
+
+
+> data_iris<-iris[1:4]
+> Cov_data<-cov(data_iris)
+> Eigen_data<-eigen(Cov_data)
+> PCA_data<-princomp(data_iris,cor="False")
+> Eigen_data$values
+[1] 4.22824171 0.24267075
+[3] 0.07820950 0.02383509
+Practical 3.b
+> PCA_data$sdev^2
+    Comp.1     Comp.2 
+4.20005343 0.24105294 
+    Comp.3     Comp.4 
+0.07768810 0.02367619 
+> PCA_data$loadings[,1:4]
+                  Comp.1
+Sepal.Length  0.36138659
+Sepal.Width  -0.08452251
+Petal.Length  0.85667061
+Petal.Width   0.35828920
+                  Comp.2
+Sepal.Length  0.65658877
+Sepal.Width   0.73016143
+Petal.Length -0.17337266
+Petal.Width  -0.07548102
+                  Comp.3
+Sepal.Length  0.58202985
+Sepal.Width  -0.59791083
+Petal.Length -0.07623608
+Petal.Width  -0.54583143
+                 Comp.4
+Sepal.Length  0.3154872
+Sepal.Width  -0.3197231
+Petal.Length -0.4798390
+Petal.Width   0.7536574
+> Eigen_data$vectors
+            [,1]        [,2]
+[1,]  0.36138659 -0.65658877
+[2,] -0.08452251 -0.73016143
+[3,]  0.85667061  0.17337266
+[4,]  0.35828920  0.07548102
+            [,3]       [,4]
+[1,] -0.58202985  0.3154872
+[2,]  0.59791083 -0.3197231
+[3,]  0.07623608 -0.4798390
+[4,]  0.54583143  0.7536574
+
+> summary(PCA_data)
+Importance of components:
+                          Comp.1
+Standard deviation     2.0494032
+Proportion of Variance 0.9246187
+Cumulative Proportion  0.9246187
+                           Comp.2
+Standard deviation     0.49097143
+Proportion of Variance 0.05306648
+Cumulative Proportion  0.97768521
+                           Comp.3
+Standard deviation     0.27872586
+Proportion of Variance 0.01710261
+Cumulative Proportion  0.99478782
+                            Comp.4
+Standard deviation     0.153870700
+Proportion of Variance 0.005212184
+Cumulative Proportion  1.000000000
+> biplot(PCA_data)
+> screeplot(PCA_data,type="lines")
+> model2=PCA_data$loadings[,1]
+> model2_scores<-as.matrix(data_iris)%*%model2
+> library(class)
+> install.packages("e1071")
+WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+Installing package into ‘C:/Users/Pratham/Documents/R/win-library/4.1’
+(as ‘lib’ is unspecified)
+also installing the dependency ‘proxy’
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.1/proxy_0.4-26.zip'
+Content type 'application/zip' length 245308 bytes (239 KB)
+downloaded 239 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.1/e1071_1.7-9.zip'
+Content type 'application/zip' length 1023550 bytes (999 KB)
+downloaded 999 KB
+
+package ‘proxy’ successfully unpacked and MD5 sums checked
+package ‘e1071’ successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\Pratham\AppData\Local\Temp\RtmpknlIlV\downloaded_packages
+> library(e1071)
+> mod1<-naiveBayes(iris[,1:4],iris[,5])
+> mod2<-naiveBayes(model2_scores,iris[,5])
+> table(predict(mod1,iris[,1:4]),iris[,5])
+            
+             setosa versicolor virginica
+  setosa         50          0         0
+  versicolor      0         47         3
+  virginica       0          3        47
+> table(predict(mod2,model2_scores),iris[,5])
+            
+             setosa versicolor virginica
+  setosa         50          0         0
+  versicolor      0         46         5
+  virginica       0          4        45
+> 
+
+
+================================================================================================================================================================
+Practical 4
+========================================================================================================================
+"K-means Clustering "
+data(iris)
+names(iris)
+new_data<-subset(iris,select = c(-Species))
+new_data #### ot1
+cl<-kmeans(new_data,3)
+cl ##### ot2
+data<-new_data
+wss<-sapply(1:15,function(k){kmeans(data,k)$tot.withinss})
+wss   ##### ot3
+plot(1:15,wss,type="b",pch=19,frame=FALSE,xlab ="Number of clusters K",ylab = "Total within-clusters sums of squares") ##### ot
+library(cluster)
+clusplot(new_data,cl$cluster,color=TRUE,shade=TRUE,labels=2,lines=0) 	####ot
+cl$cluster    ##### ot4
+cl$centers	##### ot5
+"agglomarative clustering "  ####### ot6
+clusters<-hclust(dist(iris[,3:4]))
+plot(clusters)			#### ot
+clusterCut<-cutree(clusters,3)
+table(clusterCut,iris$Species)
+
